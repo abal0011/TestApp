@@ -15,8 +15,9 @@ namespace TestApp
             String name;
             String pattern = ",";
             Int32 distance = 0;
-            Int32 Location = 0;
-            Console.WriteLine("Write a Line");
+            Int32 RLocation = 0;
+            Int32 LLocation = 0;
+            Console.WriteLine("Please Input the Robot Commands in Comma separated Values");
             name = Console.ReadLine();
             String[] elements = System.Text.RegularExpressions.Regex.Split(name, pattern);
             foreach (var element in elements)
@@ -27,21 +28,45 @@ namespace TestApp
                 var digit = int.Parse(match.Groups[2].Value); 
                 if(value == "F")
                 {
-                    if( digit > 0 && Location == 0)
+                    if( digit > 0 && RLocation == 0 && LLocation==0)
                     {
                         distance += digit;
                         
                     }
-                }     
-                else if (value == "B")
-                {
-                    if( digit > 0 && Location == 0)
+                    else if (digit > 0 && RLocation == 2 && LLocation == 0)
                     {
                         distance -= digit;
                     }
-                    else if (digit >0 && Location == 2)
+                    else if (digit > 0 && RLocation == 0 && LLocation == 2)
+                    {
+                        distance -= digit;
+                    }
+                    else if (digit > 0 && RLocation == 2 && LLocation == 2)
                     {
                         distance += digit;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Entered Wrong input");
+                    }
+                }     
+                else if (value == "B")
+                {
+                    if( digit > 0 && RLocation == 0 && LLocation == 0)
+                    {
+                        distance -= digit;
+                    }
+                    else if (digit >0 && RLocation == 2 && LLocation == 0)
+                    {
+                        distance += digit;
+                    }
+                    else if (digit > 0 && RLocation == 0 && LLocation == 2)
+                    {
+                        distance += digit;
+                    }
+                    else if (digit > 0 && RLocation == 2 && LLocation == 2)
+                    {
+                        distance -= digit;
                     }
                     else
                     {
@@ -54,15 +79,15 @@ namespace TestApp
                     {
                         if( digit/2 == 1 && distance !=0 && digit%4 !=0)
                         {
-                            Location = 2;                         
+                            RLocation = 2;                         
                         }
                         else if (digit%4 ==0)
                         {
-                            Location = 0;
+                            RLocation = 0;
                         }
                         else
                         {
-                            Location = 0;
+                            RLocation = 0;
                         }
                     }
                 }
@@ -72,21 +97,21 @@ namespace TestApp
                     {
                         if (digit / 2 == 1 && distance != 0 && digit % 4 != 0)
                         {
-                            Location = 2;
+                            LLocation = 2;
                         }
                         else if (digit % 4 == 0)
                         {
-                            Location = 0;
+                            LLocation = 0;
                         }
                         else
                         {
-                            Location = 0;
+                            LLocation = 0;
                         }
                     }
                 }
             }
     // To print the magnitude alone of the integer and omit the sign using Math.Abs()
-            Console.WriteLine(Math.Abs(distance));
+            Console.WriteLine("The minimum amount of distance to get back to the starting point  " + Math.Abs(distance));
                 
             Console.ReadLine();
         }
